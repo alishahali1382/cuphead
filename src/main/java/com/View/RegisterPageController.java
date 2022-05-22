@@ -42,7 +42,7 @@ public class RegisterPageController {
 		}
 		UserController.Message message = UserController.getInstance().register(username, password);
 		if (message==Message.SUCCESS){
-			App.setRoot("loginPage");
+			App.setRootFromFXML("loginPage");
 			return ;
 		}
 		error(message.toString());
