@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 
+import com.Controller.GameController;
 import com.Model.Avatar;
 import com.Model.Plane;
 import com.View.GamePage;
@@ -79,6 +80,13 @@ public class App extends Application {
 		GamePage.getInstance().startGame();
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	@Override
+	public void stop(){
+		GameController.getInstance().endGame();
+		System.out.println("app is closing");
+
 	}
 
 	public static void main(String[] args) {

@@ -3,7 +3,12 @@ package com.View;
 import java.util.ArrayList;
 
 import com.App;
+import com.Controller.GameController;
+import com.Model.Boss;
+import com.Model.Game;
 import com.Model.Plane;
+import com.Transitions.BossFlyTransition;
+import com.Transitions.PlaneFlyTransition;
 
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
@@ -28,31 +33,35 @@ public class GamePage{
 	public final int WIDTH, HEIGHT;
 	private Pane game;
 	private ArrayList<Transition> allTransitions = new ArrayList<>();
-	private boolean gameRunning;
 	
 	public void startGame(){
 		game = new Pane();
 		initBackground();
-		game.getChildren().add(Plane.getInstance());
+		game.getChildren().add(Boss.getInstance());
+		game.getChildren().add(Plane.getInstance().getView());
+
+		GameController.getInstance().startGame();
 		
-		gameRunning=true;		
+		initBossAnimation();
+		initPlaneAnimation();
+		
 		App.setRoot(game);
 		KeyHoldActionsThread.getInstance().setDaemon(true);
 		KeyHoldActionsThread.getInstance().start();
 	}
 	
-	public boolean isGameRunning(){ return gameRunning;}
+	private void initSingleBackgroundAnimation(String filename, double millis){
+		Image backgroundImage= new Image(App.getURL(filename).toExternalForm());
 
-	private void initBackground(){
-		Image backgroundImage= new Image(App.getURL("assets/background.png").toExternalForm());
-		
 		ImageView background1 = new ImageView(backgroundImage);
 		ImageView background2 = new ImageView(backgroundImage);
-		
-		background1.setFitWidth(backgroundImage.getWidth() * HEIGHT/backgroundImage.getHeight());
+
+		double H=backgroundImage.getHeight();
+
+		background1.setFitWidth(backgroundImage.getWidth() * HEIGHT/H);
 		background1.setFitHeight(HEIGHT);
 		
-		background2.setFitWidth(backgroundImage.getWidth() * HEIGHT/backgroundImage.getHeight());
+		background2.setFitWidth(backgroundImage.getWidth() * HEIGHT/H);
 		background2.setFitHeight(HEIGHT);
 		
 		game.getChildren().add(background1);
@@ -60,12 +69,12 @@ public class GamePage{
 
 		double W=background1.getFitWidth();
 
-		TranslateTransition translateTransition1 = new TranslateTransition(Duration.millis(30000), background1);
+		TranslateTransition translateTransition1 = new TranslateTransition(Duration.millis(millis), background1);
 		translateTransition1.setFromX(0);
 		translateTransition1.setToX(-W);
 		translateTransition1.setInterpolator(Interpolator.LINEAR);
 	
-		TranslateTransition translateTransition2 = new TranslateTransition(Duration.millis(30000), background2);
+		TranslateTransition translateTransition2 = new TranslateTransition(Duration.millis(millis), background2);
 		translateTransition2.setFromX(W);
 		translateTransition2.setToX(0);
 		translateTransition2.setInterpolator(Interpolator.LINEAR);
@@ -77,7 +86,29 @@ public class GamePage{
 		allTransitions.add(transition);
 	}
 
+	private void initBackground(){
+		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0008.png", 20000);
+		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0007.png", 20000);
+		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0006.png", 20000);
+		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0005.png", 20000);
+		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0004.png", 20000);
+		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0003.png", 20000);
+		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0002.png", 20000);
+		// initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0001.png", 30000);
+		// TODO: find the image with larger height(others have top transparent part)
+	}
 
+	private void initBossAnimation(){
+		BossFlyTransition transition = new BossFlyTransition(Boss.getInstance());
+		transition.play();
+		allTransitions.add(transition);
+	}
+
+	private void initPlaneAnimation(){
+		PlaneFlyTransition transition = new PlaneFlyTransition(Plane.getInstance().getView());
+		transition.play();
+		allTransitions.add(transition);
+	}
 
 
 

@@ -1,6 +1,7 @@
 package com.View;
 
 import com.App;
+import com.Model.Game;
 import com.Model.Plane;
 
 public class KeyHoldActionsThread extends Thread{
@@ -11,7 +12,7 @@ public class KeyHoldActionsThread extends Thread{
 	public void run() {
 		while (true){
 			// TODO: maybe kill the thread when game is paused
-			if (GamePage.getInstance().isGameRunning()){
+			if (Game.getInstance().isGameRunning()){
 				if (App.isKeyActive("W")) Plane.getInstance().goUp(); 
 				if (App.isKeyActive("A")) Plane.getInstance().goLeft(); 
 				if (App.isKeyActive("S")) Plane.getInstance().goDown();
