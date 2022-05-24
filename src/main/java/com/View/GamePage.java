@@ -118,6 +118,12 @@ public class GamePage{
 		allTransitions.add(transition);
 	}
 
-
+	
+	public void addTransition(Transition transition){
+		allTransitions.add(transition);
+	}
+	public void removeTransition(Transition transition){
+		allTransitions.remove(transition);
+	}
 
 }

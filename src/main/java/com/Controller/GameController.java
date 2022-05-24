@@ -3,6 +3,7 @@ package com.Controller;
 import com.App;
 import com.Model.Boss;
 import com.Model.Game;
+import com.Model.MiniBoss;
 import com.Model.Plane;
 
 import javafx.animation.AnimationTimer;
@@ -44,20 +45,28 @@ public class GameController {
 		// TODO: add calculated score to scoreboard ...
 	}
 
-	
-	// main game loop 
+	private int miniBossTimer;
+
+	// main game loop
 	private void update(){
 		if (App.isKeyActive(KeyCode.SPACE)){
 			Plane.getInstance().attack();
 		}
+		if (miniBossTimer++>=300){
+			miniBossTimer-=700;
+			Game.getInstance().generateRandomMiniBoss();
+		}
 
 		Boss.getInstance().randomMove();
 		Game.getInstance().moveAllBullets();
+		Game.getInstance().moveAllMiniBoss();
 
 		Game.getInstance().checkBulletHits();
 		Game.getInstance().removeDeadBullets();
 		
 		
+		
+
 	}
 
 }

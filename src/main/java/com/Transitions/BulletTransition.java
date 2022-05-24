@@ -12,7 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class BulletTransition extends Transition{
-	private static Random random = new Random();
+	private static Random random = new Random(System.currentTimeMillis());
 	private static ImagePattern imagePatterns[][];
 	
 	private static ImagePattern loadImage(String filename){
