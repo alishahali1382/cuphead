@@ -26,11 +26,12 @@ public class Game {
 		allBullets.forEach(this::removeDeadBulletFromScreen);
 		allBullets.removeIf(Bullet::isDead);
 	}
-	public void checkBulletHits(Enemy enemy){
+	public void checkBulletHits(){
 		for (Bullet bullet : allBullets) {
-			if (enemy.intersects(bullet)){
+			Boss boss = Boss.getInstance();
+			if (boss.getCollisionView().getBoundsInParent().intersects(bullet.getView().getBoundsInParent())){
 				bullet.setAlive(false);
-				enemy.setHP(enemy.getHP()-1);
+				boss.setHP(boss.getHP()-1);
 				continue ;
 			}
 		}

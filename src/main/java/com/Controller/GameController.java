@@ -2,19 +2,17 @@ package com.Controller;
 
 import com.App;
 import com.Model.Boss;
-import com.Model.Bullet;
 import com.Model.Game;
 import com.Model.Plane;
-import com.View.GamePage;
 
 import javafx.animation.AnimationTimer;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.ImagePattern;
 
 public class GameController {
 	private static GameController instance = new GameController();
 	public static GameController getInstance(){ return instance;}
+
+	public static double deltaTime=0.017;
 
 	private AnimationTimer animationTimer;
 
@@ -56,7 +54,7 @@ public class GameController {
 		Boss.getInstance().randomMove();
 		Game.getInstance().moveAllBullets();
 
-		Game.getInstance().checkBulletHits(Boss.getInstance());
+		Game.getInstance().checkBulletHits();
 		Game.getInstance().removeDeadBullets();
 		
 		

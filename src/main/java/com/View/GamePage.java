@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.App;
 import com.Controller.GameController;
 import com.Model.Boss;
-import com.Model.Game;
 import com.Model.GameObject;
 import com.Model.Plane;
 import com.Transitions.BossFlyTransition;

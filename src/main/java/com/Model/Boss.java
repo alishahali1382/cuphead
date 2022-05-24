@@ -23,7 +23,11 @@ public class Boss extends Enemy{
 		if (!canMove()) movingDirection*=-1;
 		view.setY(view.getY()+movingDirection);
 	}
-
+	
+	public Rectangle getCollisionView(){
+		Rectangle res = new Rectangle(getX()+100, getY(), getWidth()-100, getHeight());
+		return res;
+	}
 
 	
 

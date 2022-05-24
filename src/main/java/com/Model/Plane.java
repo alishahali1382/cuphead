@@ -1,6 +1,5 @@
 package com.Model;
 
-import com.Transitions.BulletTransition;
 import com.View.GamePage;
 
 public class Plane extends GameObject{
@@ -21,16 +20,17 @@ public class Plane extends GameObject{
 	}
 
 	private long lastAttackTime=0;
+	private double bulletSpawnPlace=0.4;
 	public void attack(){
 		// just bullet atttack
 		
 		long curr=System.currentTimeMillis();
-		if (curr-lastAttackTime<50) return ;
-		
+		if (curr-lastAttackTime<80) return ;
 		
 		lastAttackTime=curr;
 
-		Bullet bullet = new Bullet(getX()+getWidth(), getY()+getHeight()/2);
+		Bullet bullet = new Bullet(getX()+getWidth()/2, getY()+getHeight()*bulletSpawnPlace);
+		bulletSpawnPlace=1-bulletSpawnPlace;
 		Game.getInstance().addBullet(bullet);
 		GamePage.getInstance().addGameObject(bullet);
 	}

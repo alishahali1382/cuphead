@@ -3,9 +3,7 @@ package com.Model;
 import com.App;
 import com.Transitions.BulletTransition;
 
-import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 
 public class Bullet extends GameObject{
 	private static ImagePattern bulletImage = new ImagePattern(App.loadImage("assets/Bullet/mm_schmup_peashot_bullet_A_0001.png"));
@@ -13,7 +11,7 @@ public class Bullet extends GameObject{
 	private BulletTransition transition;
 
 	public Bullet(double x, double y){
-		super(x, y, 100, 20);
+		super(x, y, 90, 16);
 		view.setFill(bulletImage);
 		transition = new BulletTransition(this.getView());
 		transition.play();

@@ -7,7 +7,6 @@ import com.App;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
