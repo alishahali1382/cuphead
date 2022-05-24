@@ -5,9 +5,11 @@ import com.Model.Boss;
 import com.Model.Bullet;
 import com.Model.Game;
 import com.Model.Plane;
+import com.View.GamePage;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.ImagePattern;
 
 public class GameController {
@@ -47,11 +49,17 @@ public class GameController {
 	
 	// main game loop 
 	private void update(){
+		if (App.isKeyActive(KeyCode.SPACE)){
+			Plane.getInstance().attack();
+		}
+
 		Boss.getInstance().randomMove();
-		// Bullet.moveAllBullets();
-		// Bullet.removeDeadBullets();
+		Game.getInstance().moveAllBullets();
 
-
+		Game.getInstance().checkBulletHits(Boss.getInstance());
+		Game.getInstance().removeDeadBullets();
+		
+		
 	}
 
 }

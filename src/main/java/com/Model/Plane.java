@@ -1,38 +1,47 @@
 package com.Model;
 
-import com.App;
+import com.Transitions.BulletTransition;
 import com.View.GamePage;
 
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
-
-public class Plane{
+public class Plane extends GameObject{
 	private static Plane instance = new Plane();
 	public static Plane getInstance(){ return instance;}
 
 	private static final long movementSpeed=300;  // pixel/second
-	private final double GameW, GameH;
 
-	private Rectangle view;
+	private WeaponType weaponType = WeaponType.BULLET;
 
 	private Plane(){
-		view = new Rectangle(0, 0, 100, 90);
-		GameW=GamePage.getInstance().WIDTH;
-		GameH=GamePage.getInstance().HEIGHT;
-		
-		// view.setFill(new ImagePattern(new Image(App.getURL("assets/Plane.png").toExternalForm())));
+		super(0, 0, 100, 90);
+	}
+	
+	public void weaponSwitch(){
+		weaponType=(weaponType==WeaponType.BULLET?WeaponType.BOMB:WeaponType.BULLET);
+
 	}
 
-	public Rectangle getView(){ return view;}
-	
+	private long lastAttackTime=0;
+	public void attack(){
+		// just bullet atttack
+		
+		long curr=System.currentTimeMillis();
+		if (curr-lastAttackTime<50) return ;
+		
+		
+		lastAttackTime=curr;
 
+		Bullet bullet = new Bullet(getX()+getWidth(), getY()+getHeight()/2);
+		Game.getInstance().addBullet(bullet);
+		GamePage.getInstance().addGameObject(bullet);
+	}
 
+	enum WeaponType{
+		BULLET,
+		BOMB,
+		;
+	}
 
-
-
-
-	// some shit stuff to seperate movement and firing from thread
+	// some shit stuff to seperate movement from thread
 	private long lastPressTimeU=0;
 	private long lastPressTimeL=0;
 	private long lastPressTimeD=0;
@@ -80,6 +89,5 @@ public class Plane{
 		if (view.getX()>GameW-view.getWidth()) view.setX(GameW-view.getWidth());
 	}
 	// -------------------------------------------------
-
 
 }

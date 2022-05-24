@@ -6,6 +6,7 @@ import com.App;
 import com.Controller.GameController;
 import com.Model.Boss;
 import com.Model.Game;
+import com.Model.GameObject;
 import com.Model.Plane;
 import com.Transitions.BossFlyTransition;
 import com.Transitions.PlaneFlyTransition;
@@ -48,6 +49,14 @@ public class GamePage{
 		App.setRoot(game);
 		KeyHoldActionsThread.getInstance().setDaemon(true);
 		KeyHoldActionsThread.getInstance().start();
+	}
+
+	public void addGameObject(GameObject object){
+		game.getChildren().add(object.getView());
+		// TODO: add these behind plane
+	}
+	public void removeGameObject(GameObject object){
+		game.getChildren().remove(object.getView());
 	}
 	
 	private void initSingleBackgroundAnimation(String filename, double millis){

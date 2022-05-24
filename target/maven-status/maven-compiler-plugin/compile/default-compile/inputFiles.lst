@@ -1,5 +1,6 @@
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Model\Bullet.java
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Model\Boss.java
+E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Model\Enemy.java
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Transitions\BossFlyTransition.java
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\App.java
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Model\User.java
@@ -9,7 +10,9 @@ E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Controller\UserController
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Model\Game.java
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Controller\GameController.java
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Model\Plane.java
+E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Transitions\BulletTransition.java
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Transitions\PlaneFlyTransition.java
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Model\Avatar.java
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\View\RegisterPageController.java
+E:\. university\term2\AP\HW3\cuphead\src\main\java\com\Model\GameObject.java
 E:\. university\term2\AP\HW3\cuphead\src\main\java\com\View\KeyHoldActionsThread.java

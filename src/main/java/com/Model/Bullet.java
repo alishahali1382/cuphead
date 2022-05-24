@@ -1,24 +1,37 @@
 package com.Model;
 
+import com.App;
+import com.Transitions.BulletTransition;
+
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-public class Bullet extends Rectangle{
-	private double vx=5;
-	private boolean alive = true;
+public class Bullet extends GameObject{
+	private static ImagePattern bulletImage = new ImagePattern(App.loadImage("assets/Bullet/mm_schmup_peashot_bullet_A_0001.png"));
+	private double vx=10;
+	private BulletTransition transition;
 
 	public Bullet(double x, double y){
 		super(x, y, 100, 20);
+		view.setFill(bulletImage);
+		transition = new BulletTransition(this.getView());
+		transition.play();
 	}
 
-	public boolean isAlive(){ return alive;}
-	public boolean isDead(){ return !alive;}
-	public void setAlive(boolean alive){ this.alive=alive;}
-
+	
 	public void move(){
 		// TODO: check if game is paused
-		setTranslateX(getX()+vx);
-		if (getX()>Game.WIDTH) alive=false;
+		view.setX(view.getX()+vx);
+		if (view.getX()>Game.WIDTH) setAlive(false);
 	}
 
+	@Override
+	public void setAlive(boolean alive){
+		super.setAlive(alive);
+		if (!alive){
+			transition.stop();
+		}
+	}
 	
 }

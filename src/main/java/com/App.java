@@ -48,6 +48,10 @@ public class App extends Application {
 		return url;
 	}
 
+	public static Image loadImage(String filename){
+		return new Image(getURL(filename).toExternalForm());
+	}
+
 	private static Parent loadFXML(String fxml) throws IOException {
 		URL url=getURL("fxml/" + fxml + ".fxml");
 		if (url==null){
