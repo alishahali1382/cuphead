@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -24,7 +25,7 @@ import com.View.GamePage;
 
 public class App extends Application {
 	private static Scene scene;
-	private static HashMap<String, Boolean> currentlyActiveKeys = new HashMap<>();
+	private static HashMap<KeyCode, Boolean> currentlyActiveKeys = new HashMap<>();
 
 
 
@@ -39,10 +40,10 @@ public class App extends Application {
 		scene.setRoot(parent);
 	}
 
-	public static URL getURL(String fileName){
-		URL url=App.class.getResource(fileName);
+	public static URL getURL(String filename){
+		URL url=App.class.getResource(filename);
 		if (url==null){
-			System.out.println("Error: could not find resource: " + fileName);
+			System.out.println("Error: could not find resource: " + filename);
 		}
 		return url;
 	}
@@ -57,27 +58,32 @@ public class App extends Application {
 		return fxmlLoader.load();
 	}
 
-	public static boolean isKeyActive(String keyCode){
+	public static boolean isKeyActive(KeyCode keyCode){
 		Boolean res=currentlyActiveKeys.get(keyCode);
 		if (res==null) return false;
 		return res;
+	}
+
+	public void initScene(){
+		scene.setOnKeyPressed(event -> {
+			KeyCode keyCode = event.getCode();
+			if (!currentlyActiveKeys.containsKey(keyCode)) {
+				currentlyActiveKeys.put(keyCode, true);
+			}
+		});
+		scene.setOnKeyReleased(event -> 
+			currentlyActiveKeys.remove(event.getCode())
+		);
 	}
 
 	@Override
 	public void start(Stage stage) throws IOException {
 		scene = new Scene(loadFXML("loginPage"), WIDTH, HEIGHT);
 		
-		scene.setOnKeyPressed(event -> {
-			String codeString = event.getCode().toString();
-			if (!currentlyActiveKeys.containsKey(codeString)) {
-				currentlyActiveKeys.put(codeString, true);
-			}
-		});
-		scene.setOnKeyReleased(event -> 
-			currentlyActiveKeys.remove(event.getCode().toString())
-		);
+		initScene();
 		
 		GamePage.getInstance().startGame();
+		
 		stage.setScene(scene);
 		stage.show();
 	}

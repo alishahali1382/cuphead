@@ -37,7 +37,7 @@ public class GamePage{
 	public void startGame(){
 		game = new Pane();
 		initBackground();
-		game.getChildren().add(Boss.getInstance());
+		game.getChildren().add(Boss.getInstance().getView());
 		game.getChildren().add(Plane.getInstance().getView());
 
 		GameController.getInstance().startGame();
@@ -99,7 +99,7 @@ public class GamePage{
 	}
 
 	private void initBossAnimation(){
-		BossFlyTransition transition = new BossFlyTransition(Boss.getInstance());
+		BossFlyTransition transition = new BossFlyTransition(Boss.getInstance().getView());
 		transition.play();
 		allTransitions.add(transition);
 	}
