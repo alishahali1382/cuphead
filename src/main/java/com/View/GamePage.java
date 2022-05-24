@@ -18,6 +18,7 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class GamePage{
@@ -124,6 +125,13 @@ public class GamePage{
 	}
 	public void removeTransition(Transition transition){
 		allTransitions.remove(transition);
+	}
+
+	public void addRectangle(Rectangle rectangle){
+		game.getChildren().add(rectangle);
+	}
+	public void removeRectangle(Rectangle rectangle){
+		game.getChildren().remove(rectangle);
 	}
 
 }

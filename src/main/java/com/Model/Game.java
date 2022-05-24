@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.App;
+import com.Transitions.BulletHitTransition;
 import com.View.GamePage;
 
 public class Game {
@@ -15,9 +16,8 @@ public class Game {
 	
 	private boolean gameRunning;
 
-	// TODO: make private
-	public ArrayList<Bullet> allBullets = new ArrayList<>();
-	public ArrayList<MiniBoss> allMiniBoss = new ArrayList<>();
+	private ArrayList<Bullet> allBullets = new ArrayList<>();
+	private ArrayList<MiniBoss> allMiniBoss = new ArrayList<>();
 
 	public boolean isGameRunning(){ return gameRunning;}
 	public void setGameRunning(boolean isRunning){ gameRunning=isRunning;}
@@ -42,15 +42,26 @@ public class Game {
 	}
 	public void removeDeadBullets(){
 		allBullets.forEach(this::removeDeadBulletFromScreen);
+		allBullets.forEach(this::playHitAnimationForBullet);
 		allBullets.removeIf(Bullet::isDead);
 	}
+	
 	public void checkBulletHits(){
 		for (Bullet bullet : allBullets) {
 			Boss boss = Boss.getInstance();
 			if (boss.getCollisionView().getBoundsInParent().intersects(bullet.getView().getBoundsInParent())){
 				bullet.setAlive(false);
-				boss.setHP(boss.getHP()-1);
+				bullet.setHit();
+				boss.setHP(boss.getHP()-1); // gain 1 damage
 				continue ;
+			}
+			for (MiniBoss miniBoss : allMiniBoss) {
+				if (bullet.intersects(miniBoss)){
+					miniBoss.setHP(miniBoss.getHP()-1); // gain 1 damage
+					bullet.setAlive(false);
+					bullet.setHit();
+					break ;
+				}
 			}
 		}
 	}
@@ -64,6 +75,11 @@ public class Game {
 	private void removeDeadBulletFromScreen(GameObject object){
 		if (object.isDead()){
 			GamePage.getInstance().removeGameObject(object);
+		}
+	}
+	private void playHitAnimationForBullet(Bullet bullet){
+		if (bullet.getHit()){
+			new BulletHitTransition(bullet).play();
 		}
 	}
 

@@ -36,7 +36,8 @@ public class MiniBossFlyTransition extends Transition{
 		setCycleDuration(Duration.millis(800));
 		setCycleCount(INDEFINITE);
 		setInterpolator(Interpolator.LINEAR);
-		// setAutoReverse(true);
+		setAutoReverse(true); // TODO: I dont really know if this makes it better or worse :)
+		
 		// TODO: stop animation on object death
 		loadAllImages();
 	}

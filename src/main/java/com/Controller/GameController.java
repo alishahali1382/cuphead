@@ -3,7 +3,6 @@ package com.Controller;
 import com.App;
 import com.Model.Boss;
 import com.Model.Game;
-import com.Model.MiniBoss;
 import com.Model.Plane;
 
 import javafx.animation.AnimationTimer;
