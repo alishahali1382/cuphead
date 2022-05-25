@@ -17,10 +17,9 @@ public class MiniBoss extends Enemy{
 		view.setX(view.getX()-3);
 		if (getX()<=-width) setAlive(false);
 	}
-	public void kill(){
+	public void remove(){
 		transition.stop();
 		GamePage.getInstance().removeGameObject(this);
 	}
-	
 
 }

@@ -13,6 +13,7 @@ public class Enemy extends GameObject{
 		this.HP=HP;
 		if (HP<=0) setAlive(false);
 	}
+	public boolean isKilled(){ return HP<=0;}
 
 	
 }

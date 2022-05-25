@@ -62,7 +62,7 @@ public class GameController {
 
 		Game.getInstance().checkBulletHits();
 		Game.getInstance().removeDeadBullets();
-		
+		Game.getInstance().removeDeadMiniBoss();
 		
 		
 

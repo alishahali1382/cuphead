@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.App;
 import com.Transitions.BulletHitTransition;
+import com.Transitions.MiniBossDeathTransition;
 import com.View.GamePage;
 
 public class Game {
@@ -23,7 +24,7 @@ public class Game {
 	public void setGameRunning(boolean isRunning){ gameRunning=isRunning;}
 
 	public void killAllMiniBoss(){
-		allMiniBoss.forEach(MiniBoss::kill);
+		allMiniBoss.forEach(MiniBoss::remove);
 		allMiniBoss.clear();
 	}
 	public void generateRandomMiniBoss(){
@@ -44,6 +45,10 @@ public class Game {
 		allBullets.forEach(this::removeDeadBulletFromScreen);
 		allBullets.forEach(this::playHitAnimationForBullet);
 		allBullets.removeIf(Bullet::isDead);
+	}
+	public void removeDeadMiniBoss(){
+		allMiniBoss.forEach(this::playDeathAnimationForMiniBoss);
+		allMiniBoss.removeIf(MiniBoss::isDead);
 	}
 	
 	public void checkBulletHits(){
@@ -80,6 +85,11 @@ public class Game {
 	private void playHitAnimationForBullet(Bullet bullet){
 		if (bullet.getHit()){
 			new BulletHitTransition(bullet).play();
+		}
+	}
+	private void playDeathAnimationForMiniBoss(MiniBoss miniBoss){
+		if (miniBoss.getHP()<=0){
+			new MiniBossDeathTransition(miniBoss.getView()).play();
 		}
 	}
 
