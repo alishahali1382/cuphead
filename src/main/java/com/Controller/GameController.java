@@ -4,6 +4,8 @@ import com.App;
 import com.Model.Boss;
 import com.Model.Game;
 import com.Model.Plane;
+import com.View.GamePage;
+import com.View.KeyHoldActionsThread;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
@@ -14,10 +16,19 @@ public class GameController {
 
 	public static double deltaTime=0.017;
 
+	private double playTime=0;
 	private AnimationTimer animationTimer;
 
 	public void startGame(){
+		playTime=0;
 		Game.getInstance().setGameRunning(true);
+		
+		KeyHoldActionsThread.getInstance().setDaemon(true);
+		KeyHoldActionsThread.getInstance().start();
+		
+		Boss.makeNewBoss();
+		GamePage.getInstance().addGameObject(Boss.getInstance());
+		GamePage.getInstance().addGameObject(Plane.getInstance());
 
 		animationTimer = new AnimationTimer() {
 			@Override
@@ -41,6 +52,8 @@ public class GameController {
 	public void endGame(){
 		Game.getInstance().setGameRunning(false);
 		animationTimer.stop();
+		KeyHoldActionsThread.getInstance().kill();
+		
 		// TODO: add calculated score to scoreboard ...
 	}
 
@@ -48,6 +61,8 @@ public class GameController {
 
 	// main game loop
 	private void update(){
+		if (!Game.getInstance().isGameRunning()) return ;
+		playTime+=deltaTime;
 		if (App.isKeyActive(KeyCode.SPACE)){
 			Plane.getInstance().attack();
 		}
@@ -55,17 +70,17 @@ public class GameController {
 			miniBossTimer-=700;
 			Game.getInstance().generateRandomMiniBoss();
 		}
+		Game.getInstance().generateRandomEggBullet();
 
 		Boss.getInstance().randomMove();
-		Game.getInstance().moveAllBullets();
-		Game.getInstance().moveAllMiniBoss();
+		Game.getInstance().moveAllGameObjects();
 
 		Game.getInstance().checkBulletHits();
 		Game.getInstance().removeDeadBullets();
 		Game.getInstance().removeDeadMiniBoss();
 		
-		
-
 	}
 
+
+	public double getPlayTime(){ return playTime;}
 }

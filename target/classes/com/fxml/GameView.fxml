@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" />
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.View.GameViewController">
+   <children>
+      <Pane fx:id="gamePane" layoutX="40.0" layoutY="40.0" prefHeight="720.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Rectangle fx:id="weaponTypeRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutY="680.0" stroke="BLACK" strokeType="INSIDE" width="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+      <ProgressBar fx:id="remainingBossHPProgressBar" layoutX="390.0" layoutY="3.0" prefHeight="18.0" prefWidth="292.0" progress="1.0" AnchorPane.topAnchor="3.0" />
+      <Text fx:id="remainingHPText" fontSmoothingType="LCD" layoutX="51.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HP. 5" wrappingWidth="95.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="50.0">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <Text fx:id="remainingBossHPText" fontSmoothingType="LCD" layoutX="493.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100" textAlignment="CENTER" wrappingWidth="95.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="scoreText" fontSmoothingType="LCD" layoutX="443.0" layoutY="706.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="187.0" AnchorPane.bottomAnchor="5.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

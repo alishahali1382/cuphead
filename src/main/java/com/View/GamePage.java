@@ -35,25 +35,19 @@ public class GamePage{
 	private Pane game;
 	private ArrayList<Transition> allTransitions = new ArrayList<>();
 	
-	public void startGame(){
-		game = new Pane();
-		initBackground();
-		game.getChildren().add(Boss.getInstance().getView());
-		game.getChildren().add(Plane.getInstance().getView());
-
+	public void startGame(Pane gamePane){
+		game = gamePane;
+		initBackgroundAnimation();
+		
 		GameController.getInstance().startGame();
 		
-		initBossAnimation();
-		initPlaneAnimation();
+		initBossFlyAnimation();
+		initPlaneFlyAnimation();
 		
-		App.setRoot(game);
-		KeyHoldActionsThread.getInstance().setDaemon(true);
-		KeyHoldActionsThread.getInstance().start();
 	}
 
 	public void addGameObject(GameObject object){
 		game.getChildren().add(object.getView());
-		// TODO: add these behind plane
 	}
 	public void removeGameObject(GameObject object){
 		game.getChildren().remove(object.getView());
@@ -95,7 +89,7 @@ public class GamePage{
 		allTransitions.add(transition);
 	}
 
-	private void initBackground(){
+	private void initBackgroundAnimation(){
 		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0008.png", 20000);
 		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0007.png", 20000);
 		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0006.png", 20000);
@@ -107,13 +101,13 @@ public class GamePage{
 		// TODO: find the image with larger height(others have top transparent part)
 	}
 
-	private void initBossAnimation(){
+	private void initBossFlyAnimation(){
 		BossFlyTransition transition = new BossFlyTransition(Boss.getInstance().getView());
 		transition.play();
 		allTransitions.add(transition);
 	}
 
-	private void initPlaneAnimation(){
+	private void initPlaneFlyAnimation(){
 		PlaneFlyTransition transition = new PlaneFlyTransition(Plane.getInstance().getView());
 		transition.play();
 		allTransitions.add(transition);

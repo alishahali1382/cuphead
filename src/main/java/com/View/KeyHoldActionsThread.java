@@ -10,9 +10,11 @@ public class KeyHoldActionsThread extends Thread{
 	private static KeyHoldActionsThread instance = new KeyHoldActionsThread();
 	public static KeyHoldActionsThread getInstance(){ return instance;}
 
+	private boolean isFinnished=false;
+
 	@Override
 	public void run() {
-		while (true){
+		while (!isFinnished){
 			// TODO: maybe kill the thread when game is paused
 			if (Game.getInstance().isGameRunning()){
 				if (App.isKeyActive(KeyCode.W)) Plane.getInstance().goUp(); 
@@ -27,7 +29,8 @@ public class KeyHoldActionsThread extends Thread{
 				e.printStackTrace();
 			}
 		}
-		
 	}
+
+	public void kill(){ isFinnished=true;}
 	
 }

@@ -1,0 +1,4 @@
+com\Controller\UserController$Message.class
+com\Controller\UserController.class
+com\Model\User.class
+com\Model\Avatar.class

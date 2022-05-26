@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import com.Controller.GameController;
 import com.Model.Avatar;
-import com.View.GamePage;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +23,7 @@ public class App extends Application {
 
 
 
-	public static final int WIDTH=1080, HEIGHT=680;
+	public static final int WIDTH=1080, HEIGHT=710;
 
 	
 	public static void setRootFromFXML(String fxml) throws IOException {
@@ -81,7 +80,9 @@ public class App extends Application {
 		
 		initScene();
 		
-		GamePage.getInstance().startGame();
+		
+		setRootFromFXML("GameView");
+		
 		
 		stage.setScene(scene);
 		stage.show();

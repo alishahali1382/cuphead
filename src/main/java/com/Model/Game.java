@@ -3,7 +3,6 @@ package com.Model;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.App;
 import com.Transitions.BulletHitTransition;
 import com.Transitions.MiniBossDeathTransition;
 import com.View.GamePage;
@@ -13,12 +12,16 @@ public class Game {
 	public static Game getInstance(){ return instance;}
 	
 	private static Random random = new Random(System.currentTimeMillis());
-	public static final int WIDTH=App.WIDTH, HEIGHT=App.HEIGHT;
+	public static final int WIDTH=1080, HEIGHT=680;
 	
+	private int score=0;
 	private boolean gameRunning;
 
 	private ArrayList<Bullet> allBullets = new ArrayList<>();
 	private ArrayList<MiniBoss> allMiniBoss = new ArrayList<>();
+
+	public int getScore(){ return score;}
+	public void addScore(int score){ this.score+=score;}
 
 	public boolean isGameRunning(){ return gameRunning;}
 	public void setGameRunning(boolean isRunning){ gameRunning=isRunning;}
@@ -37,6 +40,16 @@ public class Game {
 			GamePage.getInstance().addGameObject(miniBoss);
 		}
 	}
+	public void generateRandomEggBullet(){
+		if (random.nextInt(300)!=0) return ;
+		if (EggBullet.getInstance()!=null) return ;
+		
+		double x=Boss.getInstance().getX();
+		double y=Boss.getInstance().getY() + Boss.getInstance().getWidth()/2 - EggBullet.height/2;
+		EggBullet eggBullet = new EggBullet(x, y);
+		GamePage.getInstance().addGameObject(eggBullet);
+		EggBullet.setInstance(eggBullet);
+	}
 
 	public void addBullet(Bullet bullet){
 		allBullets.add(bullet);
@@ -47,7 +60,7 @@ public class Game {
 		allBullets.removeIf(Bullet::isDead);
 	}
 	public void removeDeadMiniBoss(){
-		allMiniBoss.forEach(this::playDeathAnimationForMiniBoss);
+		allMiniBoss.forEach(this::handleMiniBossDeath);
 		allMiniBoss.removeIf(MiniBoss::isDead);
 	}
 	
@@ -58,6 +71,13 @@ public class Game {
 				bullet.setAlive(false);
 				bullet.setHit();
 				boss.setHP(boss.getHP()-1); // gain 1 damage
+				addScore(4);
+				continue ;
+			}
+			EggBullet eggBullet = EggBullet.getInstance();
+			if (eggBullet!=null && eggBullet.intersects(bullet)){
+				bullet.setAlive(false);
+				bullet.setHit();
 				continue ;
 			}
 			for (MiniBoss miniBoss : allMiniBoss) {
@@ -70,11 +90,12 @@ public class Game {
 			}
 		}
 	}
-	public void moveAllBullets(){
+	public void moveAllGameObjects(){
 		allBullets.forEach(Bullet::move);
-	}
-	public void moveAllMiniBoss(){
 		allMiniBoss.forEach(MiniBoss::move);
+		if (EggBullet.getInstance()!=null){
+			EggBullet.getInstance().move();
+		}
 	}
 
 	private void removeDeadBulletFromScreen(GameObject object){
@@ -87,9 +108,10 @@ public class Game {
 			new BulletHitTransition(bullet).play();
 		}
 	}
-	private void playDeathAnimationForMiniBoss(MiniBoss miniBoss){
+	private void handleMiniBossDeath(MiniBoss miniBoss){
 		if (miniBoss.getHP()<=0){
 			new MiniBossDeathTransition(miniBoss.getView()).play();
+			addScore(5);
 		}
 	}
 

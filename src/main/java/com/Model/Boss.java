@@ -1,15 +1,26 @@
 package com.Model;
 
+import com.View.GameViewController;
+
 import javafx.scene.shape.Rectangle;
 
 public class Boss extends Enemy{
-	private static Boss instance = new Boss();
+	private static Boss instance;
+	public static void makeNewBoss(){ instance = new Boss();}
 	public static Boss getInstance(){ return instance;}
-
+	
+	private static double maxHP=100;
+	public static void setMaxHP(double HP){ maxHP = HP;}
+	
+	
 	private static final double width=400, height=300;
 
+
+
 	private Boss(){
-		super(1060-width, 0, width, height, 50);
+		super(1060-width, 0, width, height, maxHP);
+		System.out.println(getHP());
+		System.out.println(maxHP);
 	}
 
 	private double movingDirection=+2.5;
@@ -29,7 +40,12 @@ public class Boss extends Enemy{
 		return res;
 	}
 
-	
+	@Override
+	public void setHP(double HP){
+		super.setHP(HP);
+		// System.out.println(HP); // TODO: bug
+		GameViewController.getInstance().setBossHP(HP/maxHP);
+	}
 
 
 }

@@ -6,17 +6,17 @@ public class Plane extends GameObject{
 	private static Plane instance = new Plane();
 	public static Plane getInstance(){ return instance;}
 
-	private static final long movementSpeed=300;  // pixel/second
+	private static final long movementSpeed=350;  // pixel/second
 
 	private WeaponType weaponType = WeaponType.BULLET;
 
 	private Plane(){
-		super(0, 0, 100, 90);
+		super(0, 0, 80, 65);
 	}
 	
 	public void weaponSwitch(){
 		weaponType=(weaponType==WeaponType.BULLET?WeaponType.BOMB:WeaponType.BULLET);
-
+		// TODO: update icon
 	}
 
 	private long lastAttackTime=0;
