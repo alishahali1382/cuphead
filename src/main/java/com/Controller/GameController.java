@@ -27,6 +27,7 @@ public class GameController {
 		KeyHoldActionsThread.getInstance().start();
 		
 		Boss.makeNewBoss();
+		Plane.setInstance();
 		GamePage.getInstance().addGameObject(Boss.getInstance());
 		GamePage.getInstance().addGameObject(Plane.getInstance());
 
@@ -49,10 +50,15 @@ public class GameController {
 		animationTimer.stop();
 	}
 
-	public void endGame(){
+	public void endGame(boolean win){
 		Game.getInstance().setGameRunning(false);
 		animationTimer.stop();
+
+		
+		// TODO: wait a little and show animation
+
 		KeyHoldActionsThread.getInstance().kill();
+		GamePage.getInstance().clearAll();
 		
 		// TODO: add calculated score to scoreboard ...
 	}
@@ -79,6 +85,13 @@ public class GameController {
 		Game.getInstance().removeDeadBullets();
 		Game.getInstance().removeDeadMiniBoss();
 		
+		Game.getInstance().checkPlaneCollision();
+		
+
+		if (Plane.getInstance().getHP()<=0){
+			Game.getInstance().addScore((int) Math.max(0, 1000-playTime));
+			endGame(true);
+		}
 	}
 
 

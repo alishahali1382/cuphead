@@ -1,17 +1,33 @@
 package com.Model;
 
+import com.Transitions.ExplosionTransition;
 import com.View.GamePage;
+import com.View.GameViewController;
+
+import javafx.scene.shape.Rectangle;
 
 public class Plane extends GameObject{
-	private static Plane instance = new Plane();
+	private static Plane instance;
+	public static void setInstance(){ instance = new Plane();}
 	public static Plane getInstance(){ return instance;}
 
 	private static final long movementSpeed=350;  // pixel/second
+	
+	private static int maxHP=5;
+	public void setMaxHP(int HP){ maxHP=HP;}
 
 	private WeaponType weaponType = WeaponType.BULLET;
+	private int HP;
 
 	private Plane(){
 		super(0, 0, 80, 65);
+		setHP(maxHP);
+	}
+
+	public int getHP(){ return HP;}
+	public void setHP(int HP){
+		this.HP=HP;
+		GameViewController.getInstance().setRemainingLives(HP);
 	}
 	
 	public void weaponSwitch(){
@@ -33,6 +49,11 @@ public class Plane extends GameObject{
 		bulletSpawnPlace=1-bulletSpawnPlace;
 		Game.getInstance().addBullet(bullet);
 		GamePage.getInstance().addGameObject(bullet);
+	}
+
+	public void playExplosionAnimation(){
+		double x=getX()+getWidth()/2, y=getY()+getHeight()/2, len=90;
+		new ExplosionTransition(new Rectangle(x-len/2, y-len/2, len, len)).play();
 	}
 
 	enum WeaponType{

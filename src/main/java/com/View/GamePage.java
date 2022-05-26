@@ -128,4 +128,11 @@ public class GamePage{
 		game.getChildren().remove(rectangle);
 	}
 
+	public void clearAll(){
+		game.getChildren().clear();
+		for (Transition transition : allTransitions) {
+			transition.stop();
+		}
+		allTransitions.clear();
+	}
 }

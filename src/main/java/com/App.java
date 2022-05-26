@@ -90,8 +90,8 @@ public class App extends Application {
 
 	@Override
 	public void stop(){
-		GameController.getInstance().endGame();
-		System.out.println("app is closing");
+		GameController.getInstance().endGame(false);
+		// System.out.println("app is closing");
 
 	}
 

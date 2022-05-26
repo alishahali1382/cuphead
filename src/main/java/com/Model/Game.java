@@ -7,6 +7,10 @@ import com.Transitions.BulletHitTransition;
 import com.Transitions.MiniBossDeathTransition;
 import com.View.GamePage;
 
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
+
 public class Game {
 	private static Game instance = new Game();
 	public static Game getInstance(){ return instance;}
@@ -116,6 +120,51 @@ public class Game {
 	}
 
 	
+	private static final int maxBlinkingFrames=200;
+	private int playerBlinkingFramesLeft=0;
+	FadeTransition blinkTransition;
+	
+	private void killPlane(){
+		int HP=Plane.getInstance().getHP()-1;
+		System.out.println(HP);
+		Plane.getInstance().setHP(HP);
+		Plane.getInstance().playExplosionAnimation();
+		if (HP>0){
+			playerBlinkingFramesLeft=maxBlinkingFrames;
+			FadeTransition transition = new FadeTransition(Duration.millis(350), Plane.getInstance().getView());
+			transition.setFromValue(0.9);
+			transition.setToValue(0.2);
+			transition.setCycleCount(Animation.INDEFINITE);
+			transition.setAutoReverse(true);
+			transition.play();
+			blinkTransition=transition;
+		}
+	}
+	public void checkPlaneCollision(){
+		if (playerBlinkingFramesLeft>0){
+			playerBlinkingFramesLeft--;
+			if (playerBlinkingFramesLeft==0){
+				Plane.getInstance().getView().setOpacity(1);
+				blinkTransition.stop();
+			}
+			return ;
+		}
+		for (MiniBoss miniBoss : allMiniBoss) {
+			if (Plane.getInstance().intersects(miniBoss)){
+				killPlane();
+				miniBoss.setHP(miniBoss.getHP()-2); // gain 2 damage
+				return ;
+			}
+		}
+		if (EggBullet.getInstance()!=null && Plane.getInstance().intersects(EggBullet.getInstance())){
+			killPlane();
+			return ;
+		}
+		if (Boss.getInstance().intersects(Plane.getInstance())){
+			Boss.getInstance().setHP(Boss.getInstance().getHP()-4); // gain 4 damage
+			killPlane();
+		}
+	}
 
 
 }
