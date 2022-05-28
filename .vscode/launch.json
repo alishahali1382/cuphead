@@ -1,0 +1,33 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "com.App",
+            "projectName": "cuphead"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "com/com.App",
+            "projectName": "cuphead"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "vmArgs": "--module-path C:/Program Files/Eclipse Adoptium/jdk-8.0.332.9-hotspot/lib --add-modules javafx.controls,javafx.fxml",
+            "mainClass": "main.java.com.App",
+            "projectName": "cuphead"
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}

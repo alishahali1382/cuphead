@@ -1,5 +1,7 @@
 package com.Controller;
 
+import java.io.File;
+
 import com.App;
 import com.Model.Boss;
 import com.Model.Game;
@@ -9,6 +11,8 @@ import com.View.KeyHoldActionsThread;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class GameController {
 	private static GameController instance = new GameController();
@@ -54,7 +58,24 @@ public class GameController {
 		Game.getInstance().setGameRunning(false);
 		animationTimer.stop();
 
-		
+		if (win){
+			try {
+				String address=App.getURL("sounds/victory.wav").toString();
+				System.out.println(address);
+				// File file = new File(address);
+				// System.out.println(file.toURI().toString());
+				Media victorySound = new Media(address);
+				// Media victorySound = new Media("../sounds/victory.wav");
+				MediaPlayer mediaPlayer = new MediaPlayer(victorySound);
+				mediaPlayer.play();
+				// TODO: shit
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+
 		// TODO: wait a little and show animation
 
 		KeyHoldActionsThread.getInstance().kill();
@@ -88,10 +109,15 @@ public class GameController {
 		Game.getInstance().checkPlaneCollision();
 		
 
-		if (Plane.getInstance().getHP()<=0){
+		if (Boss.getInstance().getHP()<=0){
 			Game.getInstance().addScore((int) Math.max(0, 1000-playTime));
 			endGame(true);
 		}
+		if (Plane.getInstance().getHP()<=0){
+			// TODO: not sure
+			endGame(false);
+		}
+
 	}
 
 

@@ -9,7 +9,7 @@ public class Boss extends Enemy{
 	public static void makeNewBoss(){ instance = new Boss();}
 	public static Boss getInstance(){ return instance;}
 	
-	private static double maxHP=100;
+	private static double maxHP=100; // TODO: set a logical value
 	public static void setMaxHP(double HP){ maxHP = HP;}
 	
 	
@@ -43,7 +43,6 @@ public class Boss extends Enemy{
 	@Override
 	public void setHP(double HP){
 		super.setHP(HP);
-		// System.out.println(HP); // TODO: bug
 		GameViewController.getInstance().setBossHP(HP/maxHP);
 	}
 

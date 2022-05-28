@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 import com.Controller.GameController;
 import com.Model.Avatar;
+import com.Model.Game;
+import com.View.GamePage;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -67,6 +69,14 @@ public class App extends Application {
 			KeyCode keyCode = event.getCode();
 			if (!currentlyActiveKeys.containsKey(keyCode)) {
 				currentlyActiveKeys.put(keyCode, true);
+			}
+			if (keyCode==KeyCode.M){
+				if (Game.getInstance().isGameRunning())
+					GamePage.getInstance().muteUnmuteThemeMusic();
+			}
+			if (keyCode==KeyCode.P){
+				if (Game.getInstance().isGameRunning())
+					GamePage.getInstance().pauseResumeThemeMusic();
 			}
 		});
 		scene.setOnKeyReleased(event -> 

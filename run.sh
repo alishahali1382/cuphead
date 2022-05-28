@@ -1,2 +1,1 @@
-"C:\Program Files\apache-maven-3.8.5\bin\mvn" javafx:run -f "e:\. university\term2\AP\HW3\cuphead\pom.xml"
-
+/usr/bin/env C:\\Program\ Files\\Java\\jdk-18.0.1.1\\bin\\java.exe -XX:+ShowCodeDetailsInExceptionMessages @C:\\Users\\ALISHA~1\\AppData\\Local\\Temp\\cp_7wnnlr7y8iqscao3ece95sca3.argfile -m com/com.App

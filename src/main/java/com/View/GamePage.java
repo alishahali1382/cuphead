@@ -15,9 +15,12 @@ import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -34,19 +37,56 @@ public class GamePage{
 	public final int WIDTH, HEIGHT;
 	private Pane game;
 	private ArrayList<Transition> allTransitions = new ArrayList<>();
-	
+	private ColorAdjust colorAdjust = new ColorAdjust();
+	private MediaPlayer themeMediaPlayer;
+
 	public void startGame(Pane gamePane){
 		game = gamePane;
+		// colorAdjust.setSaturation(-1);
 		initBackgroundAnimation();
+		initThemeMusic();
 		
 		GameController.getInstance().startGame();
-		
+				
 		initBossFlyAnimation();
 		initPlaneFlyAnimation();
+
+		playThemeMusic();
 		
 	}
 
+	private void initThemeMusic(){
+		Media backgroundSound = new Media(App.getURL("sounds/theme.wav").toString());
+		themeMediaPlayer = new MediaPlayer(backgroundSound);
+		themeMediaPlayer.setOnEndOfMedia(new Runnable() {
+			@Override
+			public void run() {
+				themeMediaPlayer.play();
+			}
+		});
+	}
+	
+	private boolean themeMusicPaused;
+	public void playThemeMusic(){
+		themeMediaPlayer.play();
+		themeMusicPaused=false;
+	}
+	public void pauseResumeThemeMusic(){
+		if (themeMusicPaused) themeMediaPlayer.play();
+		else themeMediaPlayer.pause();
+		themeMusicPaused^=true;
+	}
+	public void muteUnmuteThemeMusic(){
+		if (isThemeMusicMute()) themeMediaPlayer.setMute(false);
+		else themeMediaPlayer.setMute(true);
+	}
+	public boolean isThemeMusicMute(){
+		return themeMediaPlayer.isMute();
+	}
+
+
 	public void addGameObject(GameObject object){
+		// object.getView().setEffect(colorAdjust);
 		game.getChildren().add(object.getView());
 	}
 	public void removeGameObject(GameObject object){
@@ -58,6 +98,9 @@ public class GamePage{
 
 		ImageView background1 = new ImageView(backgroundImage);
 		ImageView background2 = new ImageView(backgroundImage);
+
+		background1.setEffect(colorAdjust);
+		background2.setEffect(colorAdjust);
 
 		double H=backgroundImage.getHeight();
 
