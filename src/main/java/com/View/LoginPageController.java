@@ -20,7 +20,6 @@ public class LoginPageController {
     @FXML
     private TextField usernameTextField;
 
-
 	@FXML
 	private synchronized void loginAction() throws IOException{
 		String username=usernameTextField.getText();
@@ -42,6 +41,11 @@ public class LoginPageController {
 	@FXML
 	private void loginAsGuestAction() throws IOException{
 		System.out.println("guest");
+	}
+
+	@FXML
+	public void initialize(){
+		
 	}
 	
 

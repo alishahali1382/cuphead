@@ -41,6 +41,8 @@ public class GamePage{
 	private MediaPlayer themeMediaPlayer;
 
 	public void startGame(Pane gamePane){
+		App.stopMenuTheme();
+		
 		game = gamePane;
 		// colorAdjust.setSaturation(-1);
 		initBackgroundAnimation();

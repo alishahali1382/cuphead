@@ -15,20 +15,36 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.stage.Stage;
 
 
 public class App extends Application {
-	private static Scene scene;
-	private static HashMap<KeyCode, Boolean> currentlyActiveKeys = new HashMap<>();
-
-
-
 	public static final int WIDTH=1080, HEIGHT=710;
+	
+	private static Scene scene;
+	private static Stage stage;
+	private static HashMap<KeyCode, Boolean> currentlyActiveKeys = new HashMap<>();
+	private static MediaPlayer menuMediaPlayer;
 
+	public static void playMenuTheme(){ menuMediaPlayer.play();}
+	public static void stopMenuTheme(){ menuMediaPlayer.stop();}
+
+	public static void fitImageViewToStage(ImageView imageView){
+		imageView.fitWidthProperty().bind(stage.widthProperty());
+	}
 	
 	public static void setRootFromFXML(String fxml) throws IOException {
+		if (menuMediaPlayer.getStatus() == Status.STOPPED){
+			String menuFXMLs[] = new String[]{"loginPage", "registerPage"}; // TODO
+			for (String string : menuFXMLs)
+				if (fxml.equals(string))
+					playMenuTheme();
+		}
 		scene.setRoot(loadFXML(fxml));
 	}
 
@@ -84,15 +100,27 @@ public class App extends Application {
 		);
 	}
 
+	public void initMenuTheme(){
+		menuMediaPlayer = new MediaPlayer(new Media(getURL("sounds/menu.wav").toExternalForm()));
+		menuMediaPlayer.setOnEndOfMedia(new Runnable() {
+			@Override
+			public void run() {
+				menuMediaPlayer.play();
+			}
+		});
+		menuMediaPlayer.play();
+	}
+
 	@Override
 	public void start(Stage stage) throws IOException {
+		initMenuTheme();
+		Avatar.loadDefaultAvatars();
+
+		this.stage = stage;
 		scene = new Scene(loadFXML("loginPage"), WIDTH, HEIGHT);
-		
 		initScene();
 		
-		
-		setRootFromFXML("GameView");
-		
+		// setRootFromFXML("GameView");
 		
 		stage.setScene(scene);
 		stage.show();
@@ -100,13 +128,11 @@ public class App extends Application {
 
 	@Override
 	public void stop(){
-		GameController.getInstance().endGame(false);
-		// System.out.println("app is closing");
+		if (Game.getInstance().isGameRunning()) GameController.getInstance().endGame(false);
 
 	}
 
 	public static void main(String[] args) {
-		Avatar.loadDefaultAvatars();
 		launch();
 	}
 

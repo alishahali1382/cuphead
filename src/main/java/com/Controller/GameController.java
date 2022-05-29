@@ -1,7 +1,5 @@
 package com.Controller;
 
-import java.io.File;
-
 import com.App;
 import com.Model.Boss;
 import com.Model.Game;
