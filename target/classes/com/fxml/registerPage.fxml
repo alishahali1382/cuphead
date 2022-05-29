@@ -29,9 +29,10 @@
             <TextField id="passwordText2" fx:id="passwordTextField2" alignment="CENTER" prefHeight="25.0" prefWidth="185.0" promptText="confirm password" />
          </children>
       </HBox>
-      <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="460.0" spacing="70.0">
+      <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="460.0" spacing="40.0">
          <children>
             <Button mnemonicParsing="false" onAction="#registerAction" prefHeight="26.0" prefWidth="100.0" text="Register" />
+            <Button mnemonicParsing="false" onAction="#backToLoginAction" prefHeight="26.0" prefWidth="100.0" text="back to login" />
          </children>
       </HBox>
       <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="226.93671894073486">

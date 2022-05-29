@@ -8,6 +8,7 @@ import java.util.HashMap;
 import com.Controller.GameController;
 import com.Model.Avatar;
 import com.Model.Game;
+import com.Model.User;
 import com.View.GamePage;
 
 import javafx.application.Application;
@@ -24,8 +25,11 @@ import javafx.stage.Stage;
 
 
 public class App extends Application {
+	private static App instance;
+	public static App getInstance(){ return instance;}
+
+
 	public static final int WIDTH=1080, HEIGHT=710;
-	
 	private static Scene scene;
 	private static Stage stage;
 	private static HashMap<KeyCode, Boolean> currentlyActiveKeys = new HashMap<>();
@@ -80,7 +84,7 @@ public class App extends Application {
 		return res;
 	}
 
-	public void initScene(){
+	private void initScene(){
 		scene.setOnKeyPressed(event -> {
 			KeyCode keyCode = event.getCode();
 			if (!currentlyActiveKeys.containsKey(keyCode)) {
@@ -102,21 +106,19 @@ public class App extends Application {
 
 	public void initMenuTheme(){
 		menuMediaPlayer = new MediaPlayer(new Media(getURL("sounds/menu.wav").toExternalForm()));
-		menuMediaPlayer.setOnEndOfMedia(new Runnable() {
-			@Override
-			public void run() {
-				menuMediaPlayer.play();
-			}
-		});
+		menuMediaPlayer.setCycleCount(-1);
 		menuMediaPlayer.play();
 	}
 
 	@Override
-	public void start(Stage stage) throws IOException {
+	public void start(Stage stage2) throws IOException {
+		instance=this;
 		initMenuTheme();
 		Avatar.loadDefaultAvatars();
+		User.loadUsersFromFile();
+		
 
-		this.stage = stage;
+		stage = stage2;
 		scene = new Scene(loadFXML("loginPage"), WIDTH, HEIGHT);
 		initScene();
 		
@@ -129,7 +131,7 @@ public class App extends Application {
 	@Override
 	public void stop(){
 		if (Game.getInstance().isGameRunning()) GameController.getInstance().endGame(false);
-
+		stage.close();
 	}
 
 	public static void main(String[] args) {

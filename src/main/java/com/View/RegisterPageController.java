@@ -41,11 +41,16 @@ public class RegisterPageController {
 			return ;
 		}
 		UserController.Message message = UserController.getInstance().register(username, password);
-		if (message==Message.SUCCESS){
+		if (message==Message.REGISTER_SUCCESS){
 			App.setRootFromFXML("loginPage");
 			return ;
 		}
 		error(message.toString());
+	}
+
+	@FXML
+	private void backToLoginAction() throws IOException{
+		App.setRootFromFXML("loginPage");
 	}
 
 }

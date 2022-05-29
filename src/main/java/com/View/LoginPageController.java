@@ -24,12 +24,11 @@ public class LoginPageController {
 	private synchronized void loginAction() throws IOException{
 		String username=usernameTextField.getText();
 		String password=passwordTextField.getText();
-		if (!User.Login(username, password)){
+		if (!User.login(username, password)){
 			errorText.setText("username and password don't match");
 		}
 		else{
-			System.out.println("login successful");
-			// go to main menu
+			App.setRootFromFXML("MainMenu");
 		}
 	}
 
@@ -40,7 +39,8 @@ public class LoginPageController {
 	
 	@FXML
 	private void loginAsGuestAction() throws IOException{
-		System.out.println("guest");
+		App.setRootFromFXML("MainMenu");
+		
 	}
 
 	@FXML

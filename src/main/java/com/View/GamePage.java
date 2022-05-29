@@ -60,12 +60,7 @@ public class GamePage{
 	private void initThemeMusic(){
 		Media backgroundSound = new Media(App.getURL("sounds/theme.wav").toString());
 		themeMediaPlayer = new MediaPlayer(backgroundSound);
-		themeMediaPlayer.setOnEndOfMedia(new Runnable() {
-			@Override
-			public void run() {
-				themeMediaPlayer.play();
-			}
-		});
+		themeMediaPlayer.setCycleCount(-1);
 	}
 	
 	private boolean themeMusicPaused;
