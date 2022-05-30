@@ -16,7 +16,7 @@ public enum WeaponType{
 			GamePage.getInstance().addGameObject(bullet);
 		}
 	},
-	BOMB("assets/shmup_icon_bomb_0001.png", 250){
+	BOMB("assets/shmup_icon_bomb_0001.png", 300){
 		@Override
 		public void attack(Plane plane) {
 			BombBullet bombBullet = new BombBullet(plane.getX()+plane.getWidth()/2, plane.getY()+plane.getHeight());

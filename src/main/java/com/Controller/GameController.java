@@ -101,7 +101,9 @@ public class GameController {
 		Game.getInstance().moveAllGameObjects();
 
 		Game.getInstance().checkBulletHits();
+		Game.getInstance().checkBombBulletHits();
 		Game.getInstance().removeDeadBullets();
+		Game.getInstance().removeDeadBombBullets();
 		Game.getInstance().removeDeadMiniBoss();
 		
 		Game.getInstance().checkPlaneCollision();

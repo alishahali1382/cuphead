@@ -22,4 +22,8 @@ public class MiniBoss extends Enemy{
 		GamePage.getInstance().removeGameObject(this);
 	}
 
+	public void damage(double val){
+		setHP(getHP()-val);
+	}
+
 }

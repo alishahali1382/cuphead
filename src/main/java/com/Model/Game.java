@@ -3,7 +3,7 @@ package com.Model;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.App;
+import com.Transitions.BombBulletHitTransition;
 import com.Transitions.BulletHitTransition;
 import com.Transitions.MiniBossDeathTransition;
 import com.View.GamePage;
@@ -11,8 +11,6 @@ import com.View.GameViewController;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class Game {
@@ -76,9 +74,10 @@ public class Game {
 	}
 	public void removeDeadBombBullets(){
 		allBombBullets.forEach(this::removeDeadGameObjectFromScreen);
-		// allBombBullets.forEach(this::playHitAnimationForBullet); // TODO
+		allBombBullets.forEach(this::playHitAnimationForBombBullet);
 		allBombBullets.removeIf(BombBullet::isDead);
 	}
+
 	public void removeDeadMiniBoss(){
 		allMiniBoss.forEach(this::handleMiniBossDeath);
 		allMiniBoss.removeIf(MiniBoss::isDead);
@@ -110,8 +109,35 @@ public class Game {
 				}
 			}
 		}
-		// TODO: for bomb bullets
 	}
+	public void checkBombBulletHits(){
+		for (BombBullet bombBullet : allBombBullets) {
+			Boss boss = Boss.getInstance();
+			if (boss.getCollisionView().getBoundsInParent().intersects(bombBullet.getView().getBoundsInParent())){
+				bombBullet.setAlive(false);
+				bombBullet.setHit();
+				boss.damage(2); // gain 2 damage
+				addScore(4);
+				continue ;
+			}
+			EggBullet eggBullet = EggBullet.getInstance();
+			if (eggBullet!=null && eggBullet.intersects(bombBullet)){
+				bombBullet.setAlive(false);
+				bombBullet.setHit();
+				continue ;
+			}
+			for (MiniBoss miniBoss : allMiniBoss) {
+				if (bombBullet.intersects(miniBoss)){
+					miniBoss.damage(2); // gain 2 damage
+					bombBullet.setAlive(false);
+					bombBullet.setHit();
+					addScore(3);
+					break ;
+				}
+			}
+		}
+	}
+	
 	public void moveAllGameObjects(){
 		allBullets.forEach(Bullet::move);
 		allBombBullets.forEach(BombBullet::move);
@@ -129,6 +155,11 @@ public class Game {
 	private void playHitAnimationForBullet(Bullet bullet){
 		if (bullet.getHit()){
 			new BulletHitTransition(bullet).play();
+		}
+	}
+	private void playHitAnimationForBombBullet(BombBullet bombBullet){
+		if (bombBullet.getHit()){
+			new BombBulletHitTransition(bombBullet).play();
 		}
 	}
 	private void handleMiniBossDeath(MiniBoss miniBoss){

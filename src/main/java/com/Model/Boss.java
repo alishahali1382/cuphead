@@ -46,5 +46,9 @@ public class Boss extends Enemy{
 		GameViewController.getInstance().setBossHP(HP/maxHP);
 	}
 
+	public void damage(double val){
+		setHP(getHP()-val);
+	}
+
 
 }
