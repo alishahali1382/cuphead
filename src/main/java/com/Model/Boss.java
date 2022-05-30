@@ -36,7 +36,7 @@ public class Boss extends Enemy{
 	}
 	
 	public Rectangle getCollisionView(){
-		Rectangle res = new Rectangle(getX()+100, getY()+20, getWidth()-100, getHeight()-40);
+		Rectangle res = new Rectangle(getX()+90, getY()+30, getWidth()-100, getHeight()-60);
 		return res;
 	}
 

@@ -27,5 +27,10 @@
             <Font size="20.0" />
          </font>
       </Text>
+      <Text fx:id="timerText" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

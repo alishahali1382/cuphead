@@ -23,13 +23,12 @@ public class EggBullet extends GameObject{
 	
 
 	public static final double width=90, height=70;
-	private static final double vx=-3;
+	private static final double vx=-5;
 
 	public EggBullet(double x, double y) {
 		super(x, y, width, height);
 		if (imagePattern==null) imagePattern=loadImage("assets/egg.png");
 		view.setFill(imagePattern);
-		System.out.println("new Egg");
 	}
 
 	public void move(){

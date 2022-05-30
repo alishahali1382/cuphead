@@ -35,6 +35,11 @@ public class GameViewController {
 	@FXML
 	private Rectangle weaponTypeRectangle;
 
+	@FXML
+	private Text timerText;
+
+
+	
 	public Pane getGamePane(){ return gamePane;}
 
 	public void setBossHP(double hp){
@@ -64,6 +69,10 @@ public class GameViewController {
 		GamePage.getInstance().startGame(gamePane);
 		System.out.println("initialize"); // TODO
 		setWeaponTypeRectangle();
+	}
+
+	public static void setTimerText(String text){
+		instance.timerText.setText(text);
 	}
 
 	

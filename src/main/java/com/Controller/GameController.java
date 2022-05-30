@@ -1,10 +1,14 @@
 package com.Controller;
 
+import java.io.IOException;
+
 import com.App;
 import com.Model.Boss;
 import com.Model.Game;
 import com.Model.Plane;
+import com.Model.User;
 import com.View.GamePage;
+import com.View.GameViewController;
 import com.View.KeyHoldActionsThread;
 
 import javafx.animation.AnimationTimer;
@@ -19,9 +23,11 @@ public class GameController {
 	public static double deltaTime=0.017;
 
 	private double playTime=0;
+	private long startTime;
 	private AnimationTimer animationTimer;
 
 	public void startGame(){
+		startTime=System.currentTimeMillis();
 		playTime=0;
 		Game.getInstance().setGameRunning(true);
 		
@@ -57,36 +63,39 @@ public class GameController {
 		animationTimer.stop();
 
 		if (win){
-			try {
-				String address=App.getURL("sounds/victory.wav").toString();
-				System.out.println(address);
-				// File file = new File(address);
-				// System.out.println(file.toURI().toString());
-				Media victorySound = new Media(address);
-				// Media victorySound = new Media("../sounds/victory.wav");
-				MediaPlayer mediaPlayer = new MediaPlayer(victorySound);
-				mediaPlayer.play();
-				// TODO: shit
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
+			handleWin();
 		}
-
-		// TODO: wait a little and show animation
-
+		
 		KeyHoldActionsThread.getInstance().kill();
 		GamePage.getInstance().clearAll();
-		
-		// TODO: add calculated score to scoreboard ...
+		try {
+			App.setRootFromFXML("MainMenu");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void handleWin(){
+		GamePage.getInstance().stopThemeMusic();
+		String address=App.getURL("sounds/victory.wav").toString();
+		Media victorySound = new Media(address);
+		MediaPlayer mediaPlayer = new MediaPlayer(victorySound);
+		mediaPlayer.play();
+		User user=User.getLoggedInUser();
+		if (user!=null) user.updateHighScore(Game.getInstance().getScore());
 	}
 
 	private int miniBossTimer;
 
+	private String getTimeString(long time){
+		time/=1000;
+		return String.format("%02d:%02d", time/60, time%60);
+	}
+
 	// main game loop
 	private void update(){
 		if (!Game.getInstance().isGameRunning()) return ;
+		GameViewController.setTimerText(getTimeString(System.currentTimeMillis()-startTime));
 		playTime+=deltaTime;
 		if (App.isKeyActive(KeyCode.SPACE)){
 			Plane.getInstance().attack();

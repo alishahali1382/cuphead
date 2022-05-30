@@ -99,6 +99,10 @@ public class App extends Application {
 				if (Game.getInstance().isGameRunning())
 					GamePage.getInstance().pauseResumeThemeMusic();
 			}
+			if (keyCode==KeyCode.B){
+				if (Game.getInstance().isGameRunning())
+					GamePage.getInstance().blackAndWhiteBackground();
+			}
 			if (keyCode==KeyCode.TAB){
 				if (Game.getInstance().isGameRunning())
 					Plane.getInstance().weaponSwitch();

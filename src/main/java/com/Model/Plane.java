@@ -1,7 +1,6 @@
 package com.Model;
 
 import com.Transitions.ExplosionTransition;
-import com.View.GamePage;
 import com.View.GameViewController;
 
 import javafx.scene.shape.Rectangle;

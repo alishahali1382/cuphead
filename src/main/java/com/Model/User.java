@@ -2,6 +2,8 @@ package com.Model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import com.Controller.DataBaseController;
@@ -28,6 +30,19 @@ public class User{
 		allUsers.put(username, this);
 	}
 
+
+	public static ArrayList<User> getTopScoreUsers(){
+		ArrayList<User> users = new ArrayList<>(allUsers.values());
+		users.sort( new Comparator<User>() {
+			@Override
+			public int compare(User o1, User o2) {
+				if (o1.highScore>o2.highScore) return -1;
+				if (o1.highScore<o2.highScore) return +1;
+				return o1.username.compareTo(o2.username);
+			}
+		});
+		return users;
+	}
 
 	
 	public static boolean login(String username, String password){
@@ -68,6 +83,11 @@ public class User{
 
 
 
+	public int getHighScore(){ return highScore;}
+	public void updateHighScore(int score){
+		if (highScore<score)
+			highScore=score;
+	}
 
 	public String getUsername(){ return this.username;}
 	public void setUsername(String username) {

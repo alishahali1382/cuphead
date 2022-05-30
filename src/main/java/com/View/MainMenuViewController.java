@@ -14,6 +14,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class MainMenuViewController {
+	private static MainMenuViewController instance;
+	public static MainMenuViewController getInstance(){ return instance;}
 	
 	@FXML
 	private Rectangle avatarRectangle;
@@ -56,6 +58,7 @@ public class MainMenuViewController {
 
 	@FXML
 	private void initialize(){
+		instance=this;
 		User user = User.getLoggedInUser();
 		Avatar avatar;
 		if (user==null){

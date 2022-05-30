@@ -160,6 +160,7 @@ public class Game {
 	private void playHitAnimationForBombBullet(BombBullet bombBullet){
 		if (bombBullet.getHit()){
 			new BombBulletHitTransition(bombBullet).play();
+			GamePage.getInstance().playExplosionSound();			
 		}
 	}
 	private void handleMiniBossDeath(MiniBoss miniBoss){
@@ -170,13 +171,12 @@ public class Game {
 	}
 
 	
-	private static final int maxBlinkingFrames=200;
+	private static final int maxBlinkingFrames=100;
 	private int playerBlinkingFramesLeft=0;
 	FadeTransition blinkTransition;
 	
 	private void killPlane(){
 		int HP=Plane.getInstance().getHP()-1;
-		System.out.println(HP);
 		Plane.getInstance().setHP(HP);
 		Plane.getInstance().playExplosionAnimation();
 		if (HP>0){

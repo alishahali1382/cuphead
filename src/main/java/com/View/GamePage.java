@@ -44,19 +44,27 @@ public class GamePage{
 		App.stopMenuTheme();
 		
 		game = gamePane;
-		// colorAdjust.setSaturation(-1);
 		initBackgroundAnimation();
 		initThemeMusic();
 		
 		GameController.getInstance().startGame();
-				
+		
 		initBossFlyAnimation();
 		initPlaneFlyAnimation();
-
+		
 		playThemeMusic();
 		
 	}
+	
+	public void blackAndWhiteBackground(){
+		colorAdjust.setSaturation(-0.7-colorAdjust.getSaturation());
+	}
 
+	private Media explosionSound = new Media(App.getURL("sounds/explosion.wav").toExternalForm());
+	public void playExplosionSound(){
+		if (isThemeMusicMute()) return ;
+		new MediaPlayer(explosionSound).play();
+	}
 	
 	private void initThemeMusic(){
 		Media backgroundSound = new Media(App.getURL("sounds/theme.wav").toString());
@@ -73,6 +81,9 @@ public class GamePage{
 		if (themeMusicPaused) themeMediaPlayer.play();
 		else themeMediaPlayer.pause();
 		themeMusicPaused^=true;
+	}
+	public void stopThemeMusic(){
+		themeMediaPlayer.stop();
 	}
 	public void muteUnmuteThemeMusic(){
 		if (isThemeMusicMute()) themeMediaPlayer.setMute(false);
