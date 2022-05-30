@@ -149,8 +149,6 @@ public class GamePage{
 		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0004.png", 20000);
 		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0003.png", 20000);
 		initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0002.png", 20000);
-		// initSingleBackgroundAnimation("assets/Background/birdhouse_bg_0001.png", 30000);
-		// TODO: find the image with larger height(others have top transparent part)
 	}
 
 	private void initBossFlyAnimation(){

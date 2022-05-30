@@ -85,8 +85,10 @@ public class User{
 
 	public int getHighScore(){ return highScore;}
 	public void updateHighScore(int score){
-		if (highScore<score)
+		if (highScore<score){
 			highScore=score;
+			saveUsersToFile();
+		}
 	}
 
 	public String getUsername(){ return this.username;}

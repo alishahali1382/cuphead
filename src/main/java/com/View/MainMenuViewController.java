@@ -47,8 +47,8 @@ public class MainMenuViewController {
 	}
 
 	@FXML
-	private void showScoreboard(ActionEvent event) {
-		// TODO
+	private void showScoreboard(ActionEvent event) throws IOException {
+		App.setRootFromFXML("Scoreboard");
 	}
 
 	@FXML

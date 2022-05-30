@@ -123,7 +123,6 @@ public class GameController {
 			endGame(true);
 		}
 		if (Plane.getInstance().getHP()<=0){
-			// TODO: not sure
 			endGame(false);
 		}
 

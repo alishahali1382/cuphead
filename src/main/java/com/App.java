@@ -131,7 +131,6 @@ public class App extends Application {
 		scene = new Scene(loadFXML("loginPage"), WIDTH, HEIGHT);
 		initScene();
 		
-		setRootFromFXML("GameView"); // TODO
 		
 		
 		stage.setScene(scene);
