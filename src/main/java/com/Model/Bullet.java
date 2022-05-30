@@ -19,7 +19,6 @@ public class Bullet extends GameObject{
 	}
 
 	public void move(){
-		// TODO: check if game is paused
 		view.setX(view.getX()+vx);
 		if (view.getX()>Game.WIDTH) setAlive(false);
 	}

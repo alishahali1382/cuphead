@@ -3,12 +3,16 @@ package com.Model;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.App;
 import com.Transitions.BulletHitTransition;
 import com.Transitions.MiniBossDeathTransition;
 import com.View.GamePage;
+import com.View.GameViewController;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class Game {
@@ -22,10 +26,14 @@ public class Game {
 	private boolean gameRunning;
 
 	private ArrayList<Bullet> allBullets = new ArrayList<>();
+	private ArrayList<BombBullet> allBombBullets = new ArrayList<>();
 	private ArrayList<MiniBoss> allMiniBoss = new ArrayList<>();
 
 	public int getScore(){ return score;}
-	public void addScore(int score){ this.score+=score;}
+	public void addScore(int score){
+		this.score+=score;
+		GameViewController.getInstance().setScore(this.score);
+	}
 
 	public boolean isGameRunning(){ return gameRunning;}
 	public void setGameRunning(boolean isRunning){ gameRunning=isRunning;}
@@ -59,9 +67,17 @@ public class Game {
 		allBullets.add(bullet);
 	}
 	public void removeDeadBullets(){
-		allBullets.forEach(this::removeDeadBulletFromScreen);
+		allBullets.forEach(this::removeDeadGameObjectFromScreen);
 		allBullets.forEach(this::playHitAnimationForBullet);
 		allBullets.removeIf(Bullet::isDead);
+	}
+	public void addBombBullet(BombBullet bombBullet){
+		allBombBullets.add(bombBullet);
+	}
+	public void removeDeadBombBullets(){
+		allBombBullets.forEach(this::removeDeadGameObjectFromScreen);
+		// allBombBullets.forEach(this::playHitAnimationForBullet); // TODO
+		allBombBullets.removeIf(BombBullet::isDead);
 	}
 	public void removeDeadMiniBoss(){
 		allMiniBoss.forEach(this::handleMiniBossDeath);
@@ -89,20 +105,23 @@ public class Game {
 					miniBoss.setHP(miniBoss.getHP()-1); // gain 1 damage
 					bullet.setAlive(false);
 					bullet.setHit();
+					addScore(3);
 					break ;
 				}
 			}
 		}
+		// TODO: for bomb bullets
 	}
 	public void moveAllGameObjects(){
 		allBullets.forEach(Bullet::move);
+		allBombBullets.forEach(BombBullet::move);
 		allMiniBoss.forEach(MiniBoss::move);
 		if (EggBullet.getInstance()!=null){
 			EggBullet.getInstance().move();
 		}
 	}
 
-	private void removeDeadBulletFromScreen(GameObject object){
+	private void removeDeadGameObjectFromScreen(GameObject object){
 		if (object.isDead()){
 			GamePage.getInstance().removeGameObject(object);
 		}

@@ -1,9 +1,12 @@
 package com.View;
 
+import com.Model.Plane;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -42,20 +45,25 @@ public class GameViewController {
 
 	public void setRemainingLives(int count){
 		remainingHPText.setText("HP. " + count);
+		if (count<=2){
+			remainingHPText.setFill(Paint.valueOf("0xff0000"));;
+		}
 	}
 	
 	public void setScore(int count){
 		scoreText.setText(""+count);
 	}
 
-	// TODO: weapon type
+	public void setWeaponTypeRectangle(){
+		weaponTypeRectangle.setFill(Plane.getInstance().getWeaponType().getImagePattern());
+	}
 
 	@FXML
 	public void initialize(){
 		instance=this;
-		System.out.println("initialize"); // TODO
-		// TODO: set default weapon type
 		GamePage.getInstance().startGame(gamePane);
+		System.out.println("initialize"); // TODO
+		setWeaponTypeRectangle();
 	}
 
 	

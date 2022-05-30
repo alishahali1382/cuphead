@@ -41,7 +41,7 @@ public class ExplosionTransition extends Transition{
 		rectangle.setFill(imagePatterns[0]);
 		GamePage.getInstance().addRectangle(rectangle);
 		
-		setCycleDuration(Duration.millis(650));
+		setCycleDuration(Duration.millis(750));
 		setCycleCount(1);
 		setInterpolator(Interpolator.LINEAR);
 		setOnFinished(e -> {

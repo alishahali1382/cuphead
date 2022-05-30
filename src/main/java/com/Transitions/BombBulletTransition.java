@@ -9,7 +9,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-public class MiniBossFlyTransition extends Transition{
+public class BombBulletTransition extends Transition{
 	private static ImagePattern imagePatterns[];
 	
 	private static ImagePattern loadImage(String filename){
@@ -22,27 +22,27 @@ public class MiniBossFlyTransition extends Transition{
 	}
 	private static void loadAllImages(){
 		if (imagePatterns!=null) return ;
-		imagePatterns = new ImagePattern[16];
-		for (int i=0; i<16; i++){
-			String filename="assets/Flappy Birds/Fly/flappy_bird_fly_"+String.format("%04d", i+1)+".png";
+		imagePatterns = new ImagePattern[7];
+		for (int i=0; i<7; i++){
+			String filename="assets/BombBullet/mm_schmup_bomb_bullet_"+String.format("%04d", i+1)+".png";
 			imagePatterns[i] = loadImage(filename);
 		}
 	}
 
 	private Rectangle rectangle;
 
-	public MiniBossFlyTransition(Rectangle rectangle){
+	public BombBulletTransition(Rectangle rectangle){
 		this.rectangle=rectangle;
-		setCycleDuration(Duration.millis(800));
-		setCycleCount(INDEFINITE);
+		setCycleDuration(Duration.millis(350));
+		setCycleCount(10); // this should be finite for the garbage collector to remove it
 		setInterpolator(Interpolator.LINEAR);
-		setAutoReverse(true);
+
 		loadAllImages();
 	}
 
 	@Override
 	protected void interpolate(double arg0) {
-		int val=((int) Math.floor(arg0*16))%16;
+		int val=((int) Math.floor(arg0*7))%7;
 		rectangle.setFill(imagePatterns[val]);
 	}
 	

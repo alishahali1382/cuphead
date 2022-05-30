@@ -8,6 +8,7 @@ import java.util.HashMap;
 import com.Controller.GameController;
 import com.Model.Avatar;
 import com.Model.Game;
+import com.Model.Plane;
 import com.Model.User;
 import com.View.GamePage;
 
@@ -44,7 +45,7 @@ public class App extends Application {
 	
 	public static void setRootFromFXML(String fxml) throws IOException {
 		if (menuMediaPlayer.getStatus() == Status.STOPPED){
-			String menuFXMLs[] = new String[]{"loginPage", "registerPage"}; // TODO
+			String menuFXMLs[] = new String[]{"loginPage", "registerPage", "ProfileMenu", "MainMenu"}; // TODO
 			for (String string : menuFXMLs)
 				if (fxml.equals(string))
 					playMenuTheme();
@@ -98,6 +99,10 @@ public class App extends Application {
 				if (Game.getInstance().isGameRunning())
 					GamePage.getInstance().pauseResumeThemeMusic();
 			}
+			if (keyCode==KeyCode.TAB){
+				if (Game.getInstance().isGameRunning())
+					Plane.getInstance().weaponSwitch();
+			}
 		});
 		scene.setOnKeyReleased(event -> 
 			currentlyActiveKeys.remove(event.getCode())
@@ -122,7 +127,8 @@ public class App extends Application {
 		scene = new Scene(loadFXML("loginPage"), WIDTH, HEIGHT);
 		initScene();
 		
-		// setRootFromFXML("GameView");
+		setRootFromFXML("GameView"); // TODO
+		
 		
 		stage.setScene(scene);
 		stage.show();

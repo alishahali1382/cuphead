@@ -23,7 +23,7 @@ public class Boss extends Enemy{
 		System.out.println(maxHP);
 	}
 
-	private double movingDirection=+2.5;
+	private double movingDirection=+5;
 
 	private boolean canMove(){
 		double y=view.getY()+movingDirection;

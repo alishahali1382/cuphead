@@ -57,6 +57,7 @@ public class GamePage{
 		
 	}
 
+	
 	private void initThemeMusic(){
 		Media backgroundSound = new Media(App.getURL("sounds/theme.wav").toString());
 		themeMediaPlayer = new MediaPlayer(backgroundSound);
@@ -82,8 +83,8 @@ public class GamePage{
 	}
 
 
+
 	public void addGameObject(GameObject object){
-		// object.getView().setEffect(colorAdjust);
 		game.getChildren().add(object.getView());
 	}
 	public void removeGameObject(GameObject object){

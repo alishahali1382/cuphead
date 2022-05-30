@@ -24,6 +24,8 @@ public class Plane extends GameObject{
 		setHP(maxHP);
 	}
 
+	public WeaponType getWeaponType(){ return weaponType;}
+
 	public int getHP(){ return HP;}
 	public void setHP(int HP){
 		this.HP=HP;
@@ -32,23 +34,15 @@ public class Plane extends GameObject{
 	
 	public void weaponSwitch(){
 		weaponType=(weaponType==WeaponType.BULLET?WeaponType.BOMB:WeaponType.BULLET);
-		// TODO: update icon
+		GameViewController.getInstance().setWeaponTypeRectangle();
 	}
 
 	private long lastAttackTime=0;
-	private double bulletSpawnPlace=0.4;
 	public void attack(){
-		// just bullet atttack
-		
 		long curr=System.currentTimeMillis();
-		if (curr-lastAttackTime<80) return ;
-		
+		if (curr-lastAttackTime<weaponType.getDelayBetweenAttacks()) return ;
 		lastAttackTime=curr;
-
-		Bullet bullet = new Bullet(getX()+getWidth()/2, getY()+getHeight()*bulletSpawnPlace);
-		bulletSpawnPlace=1-bulletSpawnPlace;
-		Game.getInstance().addBullet(bullet);
-		GamePage.getInstance().addGameObject(bullet);
+		weaponType.attack(this);		
 	}
 
 	public void playExplosionAnimation(){
@@ -56,11 +50,8 @@ public class Plane extends GameObject{
 		new ExplosionTransition(new Rectangle(x-len/2, y-len/2, len, len)).play();
 	}
 
-	enum WeaponType{
-		BULLET,
-		BOMB,
-		;
-	}
+
+
 
 	// some shit stuff to seperate movement from thread
 	private long lastPressTimeU=0;
