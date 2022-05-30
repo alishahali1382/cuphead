@@ -62,6 +62,8 @@ public class GameController {
 		Game.getInstance().setGameRunning(false);
 		animationTimer.stop();
 
+		GamePage.getInstance().stopThemeMusic();
+		
 		if (win){
 			handleWin();
 		}
@@ -76,7 +78,6 @@ public class GameController {
 	}
 	
 	private void handleWin(){
-		GamePage.getInstance().stopThemeMusic();
 		String address=App.getURL("sounds/victory.wav").toString();
 		Media victorySound = new Media(address);
 		MediaPlayer mediaPlayer = new MediaPlayer(victorySound);
